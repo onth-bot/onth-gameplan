@@ -46,6 +46,13 @@ body {
   overflow-x:hidden;
 }
 
+  .gameplan-table tbody tr:nth-child(even) {
+  background:rgba(255,255,255,.025);
+}
+.gameplan-table tbody tr:nth-child(even):hover {
+  background:var(--gold-bg);
+}
+
 /* ── HERO ────────────────────────────────────────────────── */
 .hero {
   position:relative;
@@ -407,7 +414,7 @@ function loadData() {
     .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
     .then(function(data){
       if(!Array.isArray(data)||data.length<2) throw new Error('No data returned');
-      processData(data.slice(1));
+      processData(data.slice(2));
     })
     .catch(function(e){
       document.getElementById('gameplanBody').innerHTML =
@@ -456,7 +463,8 @@ function renderTable(rows) {
   }
   body.innerHTML = rows.map(function(r, i){
     var route  = str(r[G_ROUTE]);
-    var diff   = parseFloat(str(r[G_DIFF]).replace('%',''));
+    var raw = parseFloat(str(r[G_DIFF]).replace('%',''));
+var diff = (!isNaN(raw) && raw > 0 && raw <= 1) ? raw * 100 : raw;
     var diffPct= isNaN(diff)?null:diff;
 
     return '<tr>'+
@@ -466,7 +474,7 @@ function renderTable(rows) {
           '<span class="driver-name-text">'+esc(r[G_NAME])+'</span>'+
         '</div>'+
       '</td>'+
-      '<td><span class="route-badge '+routeClass(route)+'">'+esc(route||'—')+'</span></td>'+
+      '<td>'+(route ? '<span class="route-badge '+routeClass(route)+'">'+esc(route)+'</span>' : '<span style="color:var(--muted)">—</span>')+'</td>'+
       '<td class="col-van">'+esc(str(r[G_VAN])||'—')+'</td>'+
       '<td>'+esc(str(r[G_WAVE])||'—')+'</td>'+
       '<td>'+esc(str(r[G_STOPS])||'—')+'</td>'+
