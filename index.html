@@ -288,12 +288,12 @@ body {
   .wrapper { padding:0 12px 80px; }
 
   .gameplan-table thead { display:none; }
-  .gameplan-table tbody tr {
+.gameplan-table tbody tr {
     display:block;
     border:1px solid var(--border);
     border-radius:4px;
-    margin-bottom:6px;
-    padding:10px 12px;
+    margin-bottom:4px;
+    padding:8px 10px;
     background:var(--card);
   }
   .gameplan-table tbody tr:nth-child(even) {
@@ -334,8 +334,19 @@ body {
     justify-content:unset;
     text-align:left;
   }
+  .gameplan-table tbody td:not(:first-child) {
+    padding:2px 0;
+  }
   .diff-cell { justify-content:flex-start; }
   .diff-bar-wrap { width:44px; }
+}
+
+  .gameplan-table tbody td:not(:first-child) > .route-badge {
+  display:inline-block;
+  width:auto;
+}
+.gameplan-table tbody td:not(:first-child) {
+  grid-template-columns:90px auto;
 }
   @media(min-width:768px) {
   .wrapper { padding:0 28px 100px; }
