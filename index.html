@@ -225,8 +225,7 @@ body {
 .route-badge.helper  { background:var(--helper-bg);  color:var(--helper);  border:1px solid var(--helper-bd); }
 .route-badge.close   { background:var(--close-bg);   color:var(--close);   border:1px solid var(--close-bd); }
 .route-badge.cdat    { background:var(--cdat-bg);     color:var(--cdat);    border:1px solid var(--cdat-bd); }
-.route-badge.default { background:var(--default-bg);  color:var(--white);   border:1px solid var(--default-bd); }
-
+.route-badge.default { background:var(--gold-bg); color:var(--gold); border:1px solid var(--gold-bd); }
 /* Difficulty bar */
 .diff-cell { display:flex; align-items:center; gap:7px; justify-content:center; }
 .diff-bar-wrap {
@@ -235,9 +234,11 @@ body {
 }
 .diff-bar-fill {
   height:100%; border-radius:3px;
-  background:var(--gold);
   transition:width .4s ease;
 }
+.diff-bar-fill.low    { background:#72dda0; }
+.diff-bar-fill.medium { background:var(--gold); }
+.diff-bar-fill.high   { background:#f0a0a0; }
 .diff-val {
   font-family:'DM Mono',monospace; font-size:11px;
   color:var(--muted); min-width:34px; text-align:left;
@@ -475,17 +476,17 @@ var diff = (!isNaN(raw) && raw > 0 && raw <= 1) ? raw * 100 : raw;
       '</td>'+
       '<td>'+(route ? '<span class="route-badge '+routeClass(route)+'">'+esc(route)+'</span>' : '<span style="color:var(--muted)">—</span>')+'</td>'+
       '<td class="col-van">'+esc(str(r[G_VAN])||'—')+'</td>'+
-      '<td>'+esc(str(r[G_WAVE])||'—')+'</td>'+
-      '<td>'+esc(str(r[G_STOPS])||'—')+'</td>'+
+      '<td>'+esc(str(r[G_WAVE])||'')+'</td>'+
+'<td>'+esc(str(r[G_STOPS])||'')+'</td>'+
       '<td>'+
         (diffPct!==null ?
           '<div class="diff-cell">'+
-            '<div class="diff-bar-wrap"><div class="diff-bar-fill" style="width:'+Math.min(diffPct,100)+'%"></div></div>'+
+            '<div class="diff-bar-wrap"><div class="diff-bar-fill '+(diffPct<40?'low':diffPct<70?'medium':'high')+'" style="width:'+Math.min(diffPct,100)+'%"></div></div>'+
             '<span class="diff-val">'+diffPct.toFixed(0)+'%</span>'+
           '</div>'
         : '<span style="color:var(--muted)">—</span>')+
       '</td>'+
-      '<td class="col-rts">'+esc(str(r[G_RTS])||'—')+'</td>'+
+      '<td class="col-rts">'+esc(str(r[G_RTS])||'')+'</td>'+
     '</tr>';
   }).join('');
 }
