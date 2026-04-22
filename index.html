@@ -284,13 +284,47 @@ body {
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media(max-width:600px) {
   .summary-grid { grid-template-columns:1fr 1fr; }
-  .col-van, .col-rts { display:none; }
-  .gameplan-table thead th { padding:7px 6px; font-size:8px; }
-  .gameplan-table tbody td { padding:9px 6px; font-size:12px; }
-  .gameplan-table tbody td:not(:first-child):not(:nth-child(2)) { font-size:11px; }
   .card { padding:14px 10px; }
   .wrapper { padding:0 12px 80px; }
-  .diff-bar-wrap { display:none; }
+
+  .gameplan-table thead { display:none; }
+  .gameplan-table tbody tr {
+    display:block;
+    border:1px solid var(--border);
+    border-radius:4px;
+    margin-bottom:8px;
+    padding:12px;
+    background:var(--card);
+  }
+  .gameplan-table tbody tr:nth-child(even) {
+    background:rgba(255,255,255,.025);
+  }
+  .gameplan-table tbody td {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:5px 0;
+    font-size:13px;
+    border:none;
+    text-align:left;
+  }
+  .gameplan-table tbody td:not(:first-child):not(:nth-child(2)) {
+    text-align:left;
+    justify-content:space-between;
+  }
+  .gameplan-table tbody td::before {
+    content:attr(data-label);
+    font-family:'DM Mono',monospace;
+    font-size:9px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:var(--muted);
+    flex-shrink:0;
+    margin-right:12px;
+  }
+  .gameplan-table tbody td:first-child::before { content:''; }
+  .driver-cell { width:100%; }
+  .diff-cell { justify-content:flex-end; }
 }
 @media(min-width:768px) {
   .wrapper { padding:0 28px 100px; }
@@ -477,19 +511,19 @@ var diff = (!isNaN(raw) && raw > 0 && raw <= 1) ? raw * 100 : raw;
           '<span class="driver-name-text">'+esc(r[G_NAME])+'</span>'+
         '</div>'+
       '</td>'+
-      '<td>'+(route ? '<span class="route-badge '+routeClass(route)+'">'+esc(route)+'</span>' : '<span style="color:var(--muted)">—</span>')+'</td>'+
-      '<td class="col-van">'+esc(str(r[G_VAN])||'—')+'</td>'+
-      '<td>'+esc(str(r[G_WAVE])||'')+'</td>'+
-'<td>'+esc(str(r[G_STOPS])||'')+'</td>'+
-      '<td>'+
+      '<td data-label="Route">'+(route ? '<span class="route-badge '+routeClass(route)+'">'+esc(route)+'</span>' : '<span style="color:var(--muted)">—</span>')+'</td>'+
+      '<td data-label="Bag / Van" class="col-van">'+esc(str(r[G_VAN])||'')+'</td>'+
+      '<td data-label="Wave Time">'+esc(str(r[G_WAVE])||'')+'</td>'+
+      '<td data-label="Total Stops">'+esc(str(r[G_STOPS])||'')+'</td>'+
+      '<td data-label="Route Diff">'+
         (diffPct!==null ?
           '<div class="diff-cell">'+
             '<div class="diff-bar-wrap"><div class="diff-bar-fill '+(diffPct<40?'low':diffPct<70?'medium':'high')+'" style="width:'+Math.min(diffPct,100)+'%"></div></div>'+
             '<span class="diff-val">'+diffPct.toFixed(0)+'%</span>'+
           '</div>'
-        : '<span style="color:var(--muted)">—</span>')+
+        : '')+
       '</td>'+
-      '<td class="col-rts">'+esc(str(r[G_RTS])||'')+'</td>'+
+      '<td data-label="RTS Time" class="col-rts">'+esc(str(r[G_RTS])||'')+'</td>'+
     '</tr>';
   }).join('');
 }
