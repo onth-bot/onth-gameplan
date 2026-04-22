@@ -138,7 +138,7 @@ body {
 /* ── SUMMARY GRID ────────────────────────────────────────── */
 .summary-grid {
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(3,1fr);
   gap:10px; margin-bottom:20px;
 }
 .summary-item {
@@ -339,10 +339,6 @@ body {
         <div class="lbl">Rescues / Splits</div>
         <div class="val" id="statHelper">--</div>
       </div>
-      <div class="summary-item">
-        <div class="lbl">Other</div>
-        <div class="val" id="statOther">--</div>
-      </div>
     </div>
   </div>
 
@@ -453,7 +449,6 @@ function processData(rows) {
   document.getElementById('statTotal').textContent   = valid.length || '--';
   document.getElementById('statRescue').textContent  = routes  || '--';
   document.getElementById('statHelper').textContent  = rescues || '--';
-  document.getElementById('statOther').textContent   = (valid.length - routes - rescues) || '--';
   renderLegend();
   renderTable(valid);
 }
