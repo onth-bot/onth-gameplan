@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>ONTH Daily Gameplan</title>
+<title>ONTH Driver Gameplan</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────────────────── */
@@ -18,7 +18,6 @@
   --white:      #f0efe8;
   --muted:      #78797f;
 
-  /* Route type colors */
   --rescue:     #e07b39;
   --rescue-bg:  rgba(224,123,57,0.12);
   --rescue-bd:  rgba(224,123,57,0.30);
@@ -31,44 +30,24 @@
   --cdat:       #9b6fe0;
   --cdat-bg:    rgba(155,111,224,0.12);
   --cdat-bd:    rgba(155,111,224,0.30);
-  --default:    #78797f;
-  --default-bg: rgba(120,121,127,0.10);
-  --default-bd: rgba(120,121,127,0.25);
 }
 
-/* ── RESET ──────────────────────────────────────────────── */
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body {
   background:var(--black); color:var(--white);
   font-family:'DM Sans',sans-serif; font-size:15px;
   line-height:1.7; -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
+  min-height:100vh; overflow-x:hidden;
 }
 
-  .gameplan-table tbody tr:nth-child(even) {
-  background:rgba(255,255,255,.025);
-}
-.gameplan-table tbody tr:nth-child(even):hover {
-  background:var(--gold-bg);
-}
-
-.gameplan-table thead th {
-  font-family:'DM Mono',monospace; font-size:9px;
-  letter-spacing:.18em; text-transform:uppercase;
-  color:var(--muted); padding:8px 10px;
-  border-bottom:1px solid var(--border);
-  text-align:left; white-space:nowrap;
-  position:sticky; top:0; z-index:10;
-  background:var(--card);
-}
-/* ── HERO ────────────────────────────────────────────────── */
+/* ── HERO ─────────────────────────────────────────────── */
 .hero {
   position:relative;
   display:flex; flex-direction:column;
   align-items:center; justify-content:center;
   text-align:center;
-  padding:52px 20px 44px;
+  padding:48px 20px 40px;
   background:var(--dark);
   overflow:hidden;
 }
@@ -86,90 +65,139 @@ body {
   letter-spacing:0.2em; text-transform:uppercase;
   color:var(--gold); border:1px solid var(--gold-bd);
   background:var(--gold-bg); padding:6px 16px;
-  border-radius:2px; margin-bottom:22px;
-  animation:fadeUp .6s ease both;
+  border-radius:2px; margin-bottom:18px;
+  animation:fadeUp .5s ease both;
 }
-.hero h1 {
+.hero-name {
   position:relative; z-index:1;
   font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(48px,12vw,110px);
-  line-height:.9; letter-spacing:.025em;
-  animation:fadeUp .6s .1s ease both;
+  font-size:clamp(44px,12vw,96px);
+  line-height:.92; letter-spacing:.025em;
+  animation:fadeUp .5s .08s ease both;
 }
-.hero h1 span { display:block; color:var(--gold); }
-.hero-sub {
-  position:relative; z-index:1;
-  margin-top:16px; font-size:14px; color:var(--muted);
-  max-width:480px; line-height:1.6;
-  animation:fadeUp .6s .2s ease both;
-}
+.hero-name span { display:block; color:var(--gold); font-size:clamp(20px,5vw,40px); letter-spacing:.08em; }
 .hero-meta {
   position:relative; z-index:1;
-  margin-top:14px; font-family:'DM Mono',monospace;
+  margin-top:12px; font-family:'DM Mono',monospace;
   font-size:10px; letter-spacing:.15em;
   color:var(--muted); text-transform:uppercase;
-  animation:fadeUp .6s .25s ease both;
+  animation:fadeUp .5s .16s ease both;
 }
 
 /* ── WRAPPER ─────────────────────────────────────────────── */
 .wrapper {
-  width:100%; max-width:1100px;
+  width:100%; max-width:760px;
   margin:0 auto; padding:0 16px 80px;
 }
 
 /* ── SECTION ─────────────────────────────────────────────── */
 .section {
-  margin-top:48px;
-  opacity:0; transform:translateY(16px);
+  margin-top:40px;
+  opacity:0; transform:translateY(14px);
   transition:opacity .4s ease, transform .4s ease;
 }
 .section.visible { opacity:1; transform:none; }
+
 .section-label {
   font-family:'DM Mono',monospace;
   font-size:9.5px; letter-spacing:.28em;
   text-transform:uppercase; color:var(--gold);
-  margin-bottom:10px;
+  margin-bottom:12px;
   display:flex; align-items:center; gap:12px;
 }
 .section-label::after { content:''; flex:1; height:1px; background:var(--border); }
-.section-title {
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(32px,7vw,56px);
-  line-height:1; margin-bottom:6px; letter-spacing:.02em;
-}
 
-/* ── SUMMARY GRID ────────────────────────────────────────── */
-.summary-grid {
+/* ── STAT GRID ────────────────────────────────────────────── */
+.stat-grid {
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px; margin-bottom:20px;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
 }
-.summary-item {
-  background:rgba(255,255,255,.025);
-  border:1px solid var(--border); border-radius:4px;
-  padding:12px 14px;
+.stat-grid.three { grid-template-columns:repeat(3,1fr); }
+
+.stat-item {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:5px; padding:14px 16px;
+  display:flex; flex-direction:column; gap:4px;
 }
-.summary-item .lbl {
+.stat-item.accent {
+  border-color:var(--gold-bd);
+  background:var(--gold-bg);
+}
+.stat-lbl {
   font-family:'DM Mono',monospace; font-size:9px;
   letter-spacing:.2em; text-transform:uppercase;
-  color:var(--muted); margin-bottom:4px;
+  color:var(--muted);
 }
-.summary-item .val {
+.stat-val {
   font-family:'Bebas Neue',sans-serif;
-  font-size:28px; color:var(--gold); line-height:1;
+  font-size:32px; line-height:1;
+  color:var(--white);
 }
-.summary-item .val.white { color:var(--white); }
+.stat-val.gold { color:var(--gold); }
+.stat-val.sm { font-size:22px; }
 
-/* ── CARD ────────────────────────────────────────────────── */
+/* ── ROUTE CARD ───────────────────────────────────────────── */
+.route-header {
+  display:flex; align-items:center; gap:14px;
+  margin-bottom:20px;
+}
+.route-badge-lg {
+  font-family:'DM Mono',monospace; font-size:13px;
+  padding:6px 16px; border-radius:3px; letter-spacing:.06em;
+  text-transform:uppercase; font-weight:500; flex-shrink:0;
+}
+.route-badge-lg.rescue  { background:var(--rescue-bg);  color:var(--rescue);  border:1px solid var(--rescue-bd); }
+.route-badge-lg.helper  { background:var(--helper-bg);  color:var(--helper);  border:1px solid var(--helper-bd); }
+.route-badge-lg.close   { background:var(--close-bg);   color:var(--close);   border:1px solid var(--close-bd); }
+.route-badge-lg.cdat    { background:var(--cdat-bg);     color:var(--cdat);    border:1px solid var(--cdat-bd); }
+.route-badge-lg.default { background:var(--gold-bg);    color:var(--gold);    border:1px solid var(--gold-bd); }
+
+.route-name-big {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(24px,5vw,38px); letter-spacing:.04em;
+  line-height:1;
+}
+
+/* ── DIFF BAR ─────────────────────────────────────────────── */
+.diff-section { margin-top:20px; }
+.diff-label-row {
+  display:flex; justify-content:space-between;
+  font-family:'DM Mono',monospace; font-size:10px;
+  letter-spacing:.12em; text-transform:uppercase;
+  color:var(--muted); margin-bottom:8px;
+}
+.diff-label-row strong {
+  color:var(--white); font-family:'Bebas Neue',sans-serif;
+  font-size:22px; letter-spacing:.04em; line-height:1;
+}
+.diff-track {
+  width:100%; height:7px; background:rgba(255,255,255,.08);
+  border-radius:4px; overflow:hidden;
+}
+.diff-fill {
+  height:100%; border-radius:4px;
+  transition:width .6s cubic-bezier(.22,1,.36,1);
+}
+.diff-fill.low    { background:#72dda0; }
+.diff-fill.medium { background:var(--gold); }
+.diff-fill.high   { background:#f0a0a0; }
+
+/* ── ROUTE DETAIL ROW ─────────────────────────────────────── */
+.detail-row {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:8px; margin-top:14px;
+}
+
+/* ── CARD ─────────────────────────────────────────────────── */
 .card {
   background:var(--card); border:1px solid var(--border);
-  border-radius:5px; padding:16px 14px;
-  overflow:hidden;
+  border-radius:5px; padding:18px 16px;
 }
 .card-title {
   font-family:'Bebas Neue',sans-serif;
   font-size:16px; letter-spacing:.07em; color:var(--gold);
-  margin-bottom:14px;
+  margin-bottom:16px;
   display:flex; align-items:center; gap:9px;
 }
 .ci {
@@ -179,264 +207,81 @@ body {
 }
 .ci svg { width:12px; height:12px; stroke:var(--gold); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 
-/* ── GAMEPLAN TABLE ──────────────────────────────────────── */
-.gameplan-table { width:100%; border-collapse:collapse; }
-.gameplan-table thead th {
-  font-family:'DM Mono',monospace; font-size:9px;
-  letter-spacing:.18em; text-transform:uppercase;
-  color:var(--muted); padding:8px 10px;
-  border-bottom:1px solid var(--border);
-  text-align:left; white-space:nowrap;
-}
-.gameplan-table thead th:not(:first-child):not(:nth-child(2)) { text-align:center; }
-.gameplan-table tbody tr {
-  border-bottom:1px solid rgba(42,44,49,.5);
-  transition:background .1s;
-}
-.gameplan-table tbody tr:last-child { border-bottom:none; }
-.gameplan-table tbody tr:hover { background:var(--gold-bg); }
-.gameplan-table tbody td {
-  padding:10px 10px; font-size:13px; vertical-align:middle;
-}
-.gameplan-table tbody td:not(:first-child):not(:nth-child(2)) {
-  text-align:center;
-  font-family:'DM Mono',monospace; font-size:12px;
-  color:#c8c8c8; white-space:nowrap;
-}
-
-/* Driver name cell */
-.driver-cell { display:flex; align-items:center; gap:10px; min-width:0; }
-.driver-num {
-  font-family:'Bebas Neue',sans-serif; font-size:16px;
-  color:var(--muted); min-width:20px; text-align:center;
-  flex-shrink:0; line-height:1;
-}
-.driver-name-text {
-  font-weight:600; font-size:13px; color:var(--white);
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  min-width:0; flex:1;
-}
-
-/* Route badge */
-.route-badge {
-  display:inline-block;
-  font-family:'DM Mono',monospace; font-size:10px;
-  padding:3px 9px; border-radius:2px; letter-spacing:.06em;
-  text-transform:uppercase; white-space:nowrap; font-weight:500;
-}
-.route-badge.rescue  { background:var(--rescue-bg);  color:var(--rescue);  border:1px solid var(--rescue-bd); }
-.route-badge.helper  { background:var(--helper-bg);  color:var(--helper);  border:1px solid var(--helper-bd); }
-.route-badge.close   { background:var(--close-bg);   color:var(--close);   border:1px solid var(--close-bd); }
-.route-badge.cdat    { background:var(--cdat-bg);     color:var(--cdat);    border:1px solid var(--cdat-bd); }
-.route-badge.default { background:var(--gold-bg); color:var(--gold); border:1px solid var(--gold-bd); }
-/* Difficulty bar */
-.diff-cell { display:flex; align-items:center; gap:7px; justify-content:center; }
-.diff-bar-wrap {
-  width:56px; height:5px; background:rgba(255,255,255,.08);
-  border-radius:3px; overflow:hidden; flex-shrink:0;
-}
-.diff-bar-fill {
-  height:100%; border-radius:3px;
-  transition:width .4s ease;
-}
-.diff-bar-fill.low    { background:#72dda0; }
-.diff-bar-fill.medium { background:var(--gold); }
-.diff-bar-fill.high   { background:#f0a0a0; }
-.diff-val {
-  font-family:'DM Mono',monospace; font-size:11px;
-  color:var(--muted); min-width:34px; text-align:left;
-}
-
-/* Empty / loading */
-.empty-state {
-  padding:2rem; text-align:center;
+/* ── ERROR / LOADING ──────────────────────────────────────── */
+.state-box {
+  padding:48px 24px; text-align:center;
   color:var(--muted); font-family:'DM Mono',monospace;
-  font-size:11px; letter-spacing:.1em; line-height:1.6;
+  font-size:11px; letter-spacing:.12em; line-height:2;
+}
+.state-box .big {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:48px; color:var(--border);
+  display:block; line-height:1; margin-bottom:12px;
 }
 
-/* Legend */
-.legend {
-  display:flex; flex-wrap:wrap; gap:10px;
-  margin-bottom:14px;
-}
-.legend-item {
-  display:flex; align-items:center; gap:6px;
-  font-family:'DM Mono',monospace; font-size:9.5px;
-  letter-spacing:.08em; text-transform:uppercase; color:var(--muted);
-}
-.legend-dot {
-  width:8px; height:8px; border-radius:50%; flex-shrink:0;
-}
+/* ── NO DATA PILL ─────────────────────────────────────────── */
+.none { color:var(--muted); font-family:'DM Mono',monospace; font-size:11px; }
 
-/* ── FOOTER ──────────────────────────────────────────────── */
+/* ── FOOTER ───────────────────────────────────────────────── */
 .footer {
   border-top:1px solid var(--border);
-  padding:36px 16px; text-align:center;
+  padding:32px 16px; text-align:center;
   color:var(--muted); font-size:12px;
 }
 .footer-logo {
   font-family:'Bebas Neue',sans-serif;
-  font-size:26px; letter-spacing:.06em;
-  color:var(--white); margin-bottom:6px;
+  font-size:24px; letter-spacing:.06em;
+  color:var(--white); margin-bottom:4px;
 }
 .footer-logo span { color:var(--gold); }
 
-/* ── RESPONSIVE ──────────────────────────────────────────── */
-@media(max-width:600px) {
-  .summary-grid { grid-template-columns:1fr 1fr; }
-  .card { padding:14px 10px; }
-  .wrapper { padding:0 12px 80px; }
-
-  .gameplan-table thead { display:none; }
-.gameplan-table tbody tr {
-    display:block;
-    border:1px solid var(--border);
-    border-radius:4px;
-    margin-bottom:4px;
-    padding:8px 10px;
-    background:var(--card);
-  }
-  .gameplan-table tbody tr:nth-child(even) {
-    background:rgba(255,255,255,.025);
-  }
-
-  /* Driver name row — full width header */
-  .gameplan-table tbody td:first-child {
-    display:block;
-    padding:0 0 8px 0;
-    border-bottom:1px solid var(--border);
-    margin-bottom:6px;
-  }
-  .driver-cell { width:100%; }
-  .driver-num { font-size:14px; color:var(--gold); }
-  .driver-name-text { font-size:14px; }
-
-  /* All other fields — compact two-column label/value */
-  .gameplan-table tbody td:not(:first-child) {
-    display:grid;
-    grid-template-columns:100px 1fr;
-    align-items:center;
-    padding:3px 0;
-    font-size:12px;
-    border:none;
-    text-align:left;
-    gap:8px;
-  }
-  .gameplan-table tbody td:not(:first-child)::before {
-    content:attr(data-label);
-    font-family:'DM Mono',monospace;
-    font-size:8.5px;
-    letter-spacing:.15em;
-    text-transform:uppercase;
-    color:var(--muted);
-  }
-  .gameplan-table tbody td:not(:first-child):not(:nth-child(2)) {
-    justify-content:unset;
-    text-align:left;
-  }
-  .gameplan-table tbody td:not(:first-child) {
-    padding:2px 0;
-  }
-  .diff-cell { justify-content:flex-start; }
-  .diff-bar-wrap { width:44px; }
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media(max-width:480px) {
+  .stat-grid.three { grid-template-columns:1fr 1fr; }
+  .detail-row { grid-template-columns:1fr; }
 }
-
-  .gameplan-table tbody td:not(:first-child) > .route-badge {
-  display:inline-block;
-  width:auto;
-}
-.gameplan-table tbody td:not(:first-child) {
-  grid-template-columns:90px auto;
-}
-  @media(min-width:768px) {
+@media(min-width:600px) {
   .wrapper { padding:0 28px 100px; }
-  .hero { padding:64px 24px 52px; }
-  .section { margin-top:64px; }
   .card { padding:22px 24px; }
-  .card-title { font-size:19px; margin-bottom:16px; }
-  .ci { width:26px; height:26px; }
-  .ci svg { width:14px; height:14px; }
-  .gameplan-table thead th { padding:9px 14px; font-size:9.5px; }
-  .gameplan-table tbody td { padding:11px 14px; font-size:14px; }
-  .gameplan-table tbody td:not(:first-child):not(:nth-child(2)) { font-size:13px; }
-  .driver-num { font-size:18px; min-width:24px; }
-  .driver-name-text { font-size:14px; }
-  .summary-item { padding:16px 18px; }
-  .summary-item .lbl { font-size:9.5px; }
-  .summary-item .val { font-size:34px; }
+  .stat-item { padding:16px 20px; }
 }
 
 @keyframes fadeUp {
   from { opacity:0; transform:translateY(14px); }
   to   { opacity:1; transform:none; }
 }
+
+/* Spinner */
+.spin {
+  width:28px; height:28px; border-radius:50%;
+  border:3px solid var(--border);
+  border-top-color:var(--gold);
+  animation:spin .7s linear infinite;
+  margin:0 auto 14px;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
 </style>
 </head>
 <body>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">DSJ5 · Daily Operations</div>
-  <h1>Daily<span>Gameplan</span></h1>
-  <p class="hero-sub">Today's driver assignments, routes, and wave times for DSJ5.</p>
+  <div class="hero-badge">DSJ5 · Driver Gameplan</div>
+  <div class="hero-name" id="heroName">
+    <span>Loading...</span>
+  </div>
   <p class="hero-meta">DSJ5 &nbsp;&middot;&nbsp; Fresno, CA &nbsp;&middot;&nbsp; <span id="dateBadge"></span></p>
 </section>
 
-<div class="wrapper">
-
-  <!-- SUMMARY -->
-  <div class="section" style="margin-top:32px;">
-    <div class="summary-grid">
-      <div class="summary-item">
-        <div class="lbl">Total Drivers</div>
-        <div class="val white" id="statTotal">--</div>
-      </div>
-      <div class="summary-item">
-        <div class="lbl">Total Routes</div>
-        <div class="val" id="statRescue">--</div>
-      </div>
-      <div class="summary-item">
-        <div class="lbl">Rescues / Splits</div>
-        <div class="val" id="statHelper">--</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- GAMEPLAN TABLE -->
-  <div class="section">
-    <div class="section-label">Today's Assignments</div>
-    <div class="section-title" id="gamplanDateTitle">Loading...</div>
-
-    <div class="legend" id="legendBar"></div>
-
+<div class="wrapper" id="mainContent">
+  <div class="section visible" style="margin-top:32px;">
     <div class="card">
-      <div class="card-title">
-        <span class="ci">
-          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        </span>
-        Driver Assignments &mdash; Sorted by Name
-      </div>
-      <div style="overflow-x:auto; overflow-y:auto; max-height:85vh;">
-        <table class="gameplan-table" id="gameplanTable">
-          <thead>
-            <tr>
-              <th style="min-width:160px;">Driver</th>
-              <th style="min-width:130px;">Route / Assignment</th>
-              <th class="col-van">Bag / Van</th>
-              <th>Wave Time</th>
-              <th>Total Stops</th>
-              <th>Route Diff %</th>
-              <th class="col-rts">RTS Time</th>
-            </tr>
-          </thead>
-          <tbody id="gameplanBody">
-            <tr><td colspan="7"><div class="empty-state">Loading gameplan...</div></td></tr>
-          </tbody>
-        </table>
+      <div class="state-box">
+        <div class="spin"></div>
+        Fetching your assignment...
       </div>
     </div>
   </div>
-
 </div>
 
 <footer class="footer">
@@ -446,151 +291,176 @@ body {
 
 <script>
 // ── CONFIG ───────────────────────────────────────────────────
-// Replace with your gameplan Apps Script deployment URL
 var API_URL = 'https://script.google.com/macros/s/AKfycbxb9ZQAxdZ9JeDi60V4Qwkhdn4gj3DTKzbabDfSH-0wUUcEKSIR3m_liDjErk4qf-X59Q/exec';
 
-// Column indices — adjust to match your sheet's keep[] array
-// Expected order from Apps Script: Name, Route, Van, WaveTime, Stops, Difficulty, RTS
-var G_NAME  = 0;
-var G_ROUTE = 1;
-var G_VAN   = 2;
-var G_WAVE  = 3;
-var G_STOPS = 4;
-var G_DIFF  = 5;
-var G_RTS   = 6;
-
 // ── INIT ─────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   var now = new Date();
   document.getElementById('dateBadge').textContent =
-    now.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'}).toUpperCase();
-  document.getElementById('gamplanDateTitle').textContent =
-    now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-  loadData();
+    now.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' }).toUpperCase();
+
+  var params = new URLSearchParams(window.location.search);
+  var driver = params.get('driver') || params.get('name') || '';
+
+  if (!driver.trim()) {
+    renderError('No driver specified', 'Add ?driver=YourName to the URL');
+    return;
+  }
+
+  loadData(driver.trim());
 });
 
 // ── FETCH ────────────────────────────────────────────────────
-function loadData() {
-  fetch(API_URL)
-    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
-    .then(function(data){
-      if(!Array.isArray(data)||data.length<2) throw new Error('No data returned');
-      processData(data.slice(2));
+function loadData(driver) {
+  var url = API_URL + '?driver=' + encodeURIComponent(driver);
+  fetch(url)
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function (data) {
+      if (data.error) throw new Error(data.error);
+      render(data);
     })
-    .catch(function(e){
-      document.getElementById('gameplanBody').innerHTML =
-        '<tr><td colspan="7"><div class="empty-state">Failed to load: '+esc(e.message)+'</div></td></tr>';
+    .catch(function (e) {
+      renderError('Could not load assignment', e.message);
     });
 }
 
-// ── PROCESS ──────────────────────────────────────────────────
-function processData(rows) {
-  // Filter out blank names
-  var valid = rows.filter(function(r){ return str(r[G_NAME]); });
+// ── RENDER ───────────────────────────────────────────────────
+function render(data) {
+  var gp  = data.gameplan  || {};
+  var rh  = data.route     || {};
 
-  // Sort by name alphabetically
-  valid.sort(function(a,b){
-    return str(a[G_NAME]).localeCompare(str(b[G_NAME]));
-  });
+  var name   = str(gp.name)   || 'Driver';
+  var route  = str(gp.route)  || '';
+  var van    = str(gp.van)    || '';
+  var wave   = str(gp.wave)   || '';
+  var stops  = str(gp.stops)  || '';
+  var rts    = str(gp.rts)    || '';
 
-  // Summary counts
-  var routes=0, rescues=0;
-  valid.forEach(function(r){
-    var rt = str(r[G_ROUTE]).toUpperCase();
-    if(rt.includes('CX')) routes++;
-    if(rt.includes('RESCUE') || rt.includes('SPLIT')) rescues++;
-  });
-  document.getElementById('statTotal').textContent   = valid.length || '--';
-  document.getElementById('statRescue').textContent  = routes  || '--';
-  document.getElementById('statHelper').textContent  = rescues || '--';
-  renderLegend();
-  renderTable(valid);
-}
+  // Hero
+  var nameParts = name.split(' ');
+  var firstName = nameParts[0] || name;
+  var lastName  = nameParts.slice(1).join(' ');
+  document.getElementById('heroName').innerHTML =
+    '<span>' + esc(firstName) + '</span>' +
+    (lastName ? esc(lastName) : '');
 
-// ── RENDER TABLE ─────────────────────────────────────────────
-function renderTable(rows) {
-  var body = document.getElementById('gameplanBody');
-  if(!rows.length){
-    body.innerHTML='<tr><td colspan="7"><div class="empty-state">No drivers found for today</div></td></tr>';
-    return;
+  // Route helper fields
+  var diffRaw    = str(rh.difficulty) || '';
+  var bizStops   = str(rh.businessStops) || '';
+  var apts       = str(rh.apartments) || '';
+  var routeLabel = str(rh.route) || route;
+
+  // Parse difficulty
+  var rawNum = parseFloat(diffRaw.replace('%',''));
+  var diff   = (!isNaN(rawNum) && rawNum > 0 && rawNum <= 1) ? rawNum * 100 : rawNum;
+  var diffPct = isNaN(diff) ? null : diff;
+  var diffClass = diffPct === null ? '' : (diffPct < 40 ? 'low' : diffPct < 70 ? 'medium' : 'high');
+
+  var html = '';
+
+  // ── TODAY'S ASSIGNMENT ──────────────────────────────────────
+  html += '<div class="section">';
+  html += '<div class="section-label">Today\'s Assignment</div>';
+  html += '<div class="card">';
+  html += '<div class="card-title">';
+  html += '<span class="ci"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>';
+  html += 'Assignment Details';
+  html += '</div>';
+
+  // Route header
+  if (route) {
+    html += '<div class="route-header">';
+    html += '<span class="route-badge-lg ' + routeClass(route) + '">' + esc(route) + '</span>';
+    if (routeLabel && routeLabel !== route) {
+      html += '<span class="route-name-big">' + esc(routeLabel) + '</span>';
+    }
+    html += '</div>';
   }
-  body.innerHTML = rows.map(function(r, i){
-    var route  = str(r[G_ROUTE]);
-    var raw = parseFloat(str(r[G_DIFF]).replace('%',''));
-var diff = (!isNaN(raw) && raw > 0 && raw <= 1) ? raw * 100 : raw;
-    var diffPct= isNaN(diff)?null:diff;
 
-    return '<tr>'+
-      '<td>'+
-        '<div class="driver-cell">'+
-          '<span class="driver-num">'+(i+1)+'</span>'+
-          '<span class="driver-name-text">'+esc(r[G_NAME])+'</span>'+
-        '</div>'+
-      '</td>'+
-      '<td data-label="Route">'+(route ? '<span class="route-badge '+routeClass(route)+'">'+esc(route)+'</span>' : '<span style="color:var(--muted)">—</span>')+'</td>'+
-      '<td data-label="Bag / Van" class="col-van">'+esc(str(r[G_VAN])||'')+'</td>'+
-      '<td data-label="Wave Time">'+esc(str(r[G_WAVE])||'')+'</td>'+
-      '<td data-label="Total Stops">'+esc(str(r[G_STOPS])||'')+'</td>'+
-      '<td data-label="Route Diff">'+
-        (diffPct!==null ?
-          '<div class="diff-cell">'+
-            '<div class="diff-bar-wrap"><div class="diff-bar-fill '+(diffPct<40?'low':diffPct<70?'medium':'high')+'" style="width:'+Math.min(diffPct,100)+'%"></div></div>'+
-            '<span class="diff-val">'+diffPct.toFixed(0)+'%</span>'+
-          '</div>'
-        : '')+
-      '</td>'+
-      '<td data-label="RTS Time" class="col-rts">'+esc(str(r[G_RTS])||'')+'</td>'+
-    '</tr>';
-  }).join('');
+  // Core stats grid
+  html += '<div class="stat-grid">';
+  html += statItem('Wave Time', wave || '—', wave ? 'gold' : '');
+  html += statItem('RTS w/ Breaks', rts  || '—', '');
+  html += '</div>';
+
+  html += '<div class="stat-grid three" style="margin-top:8px;">';
+  html += statItem('Total Stops', stops || '—', stops ? 'gold' : '');
+  html += statItem('Bag / Van', van   || '—', '');
+  html += '</div>';
+
+  html += '</div>'; // .card
+  html += '</div>'; // .section
+
+  // ── ROUTE PROFILE ───────────────────────────────────────────
+  var hasRouteData = diffPct !== null || bizStops || apts;
+  if (hasRouteData) {
+    html += '<div class="section">';
+    html += '<div class="section-label">Route Profile</div>';
+    html += '<div class="card">';
+    html += '<div class="card-title">';
+    html += '<span class="ci"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>';
+    html += 'Route Details';
+    html += '</div>';
+
+    if (diffPct !== null) {
+      html += '<div class="diff-section">';
+      html += '<div class="diff-label-row">';
+      html += '<span>Route Difficulty</span>';
+      html += '<strong>' + diffPct.toFixed(0) + '%</strong>';
+      html += '</div>';
+      html += '<div class="diff-track"><div class="diff-fill ' + diffClass + '" style="width:' + Math.min(diffPct,100) + '%"></div></div>';
+      html += '</div>';
+    }
+
+    if (bizStops || apts) {
+      html += '<div class="detail-row">';
+      if (bizStops) html += statItem('Business Stops', bizStops, '');
+      if (apts)     html += statItem('Apartments', apts, '');
+      html += '</div>';
+    }
+
+    html += '</div>'; // .card
+    html += '</div>'; // .section
+  }
+
+  document.getElementById('mainContent').innerHTML = html;
+
+  // Trigger scroll animations
+  var obs = new IntersectionObserver(function(e){
+    e.forEach(function(x){ if(x.isIntersecting) x.target.classList.add('visible'); });
+  }, {threshold:0.05});
+  document.querySelectorAll('.section').forEach(function(s){ obs.observe(s); });
 }
 
-// ── LEGEND ───────────────────────────────────────────────────
-function renderLegend() {
-  var items = [
-    {cls:'rescue', color:'var(--rescue)', label:'Rescue'},
-    {cls:'helper', color:'var(--helper)', label:'Helper'},
-    {cls:'close',  color:'var(--close)',  label:'Close'},
-    {cls:'cdat',   color:'var(--cdat)',   label:'CDAT'},
-    {cls:'default',color:'var(--muted)',  label:'Other'},
-  ];
-  document.getElementById('legendBar').innerHTML = items.map(function(it){
-    return '<div class="legend-item">'+
-      '<span class="legend-dot" style="background:'+it.color+'"></span>'+
-      it.label+
+// ── HELPERS ──────────────────────────────────────────────────
+function statItem(label, val, valClass) {
+  return '<div class="stat-item' + (valClass === 'gold' ? ' accent' : '') + '">' +
+    '<div class="stat-lbl">' + esc(label) + '</div>' +
+    '<div class="stat-val' + (valClass ? ' ' + valClass : '') + ' ' + (String(val).length > 6 ? 'sm' : '') + '">' + esc(val) + '</div>' +
     '</div>';
-  }).join('');
 }
 
-// ── UTILS ─────────────────────────────────────────────────────
 function routeClass(route) {
   var r = str(route).toLowerCase();
-  if(r === 'rescue')       return 'rescue';
-  if(r.includes('helper')) return 'helper';
-  if(r === 'close')        return 'close';
-  if(r === 'cdat')         return 'cdat';
+  if (r === 'rescue')       return 'rescue';
+  if (r.includes('helper')) return 'helper';
+  if (r === 'close')        return 'close';
+  if (r === 'cdat')         return 'cdat';
   return 'default';
 }
 
-function parseTime(s) {
-  if(!s) return null;
-  var m = s.match(/(\d{1,2}):(\d{2})\s*(am|pm)?/i);
-  if(!m) return null;
-  var h = parseInt(m[1]), mn = parseInt(m[2]);
-  var ampm = (m[3]||'').toLowerCase();
-  if(ampm==='pm' && h!==12) h+=12;
-  if(ampm==='am' && h===12) h=0;
-  return h*60+mn;
+function renderError(title, msg) {
+  document.getElementById('heroName').innerHTML = '<span>Not Found</span>';
+  document.getElementById('mainContent').innerHTML =
+    '<div class="section visible" style="margin-top:32px;"><div class="card"><div class="state-box">' +
+    '<span class="big">!</span>' +
+    '<strong>' + esc(title) + '</strong><br>' +
+    '<span>' + esc(msg) + '</span>' +
+    '</div></div></div>';
 }
 
-function str(v){ return String(v==null?'':v).trim(); }
-function esc(s){ return str(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-</script>
-
-<script>
-var obs = new IntersectionObserver(function(e){
-  e.forEach(function(x){ if(x.isIntersecting) x.target.classList.add('visible'); });
-},{threshold:0.05});
-document.querySelectorAll('.section').forEach(function(s){ obs.observe(s); });
+function str(v) { return String(v == null ? '' : v).trim(); }
+function esc(s) { return str(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 </script>
 
 </body>
