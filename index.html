@@ -549,7 +549,7 @@ body {
     <div class="hero-badge" id="dateBadge"></div>
   </div>
 
-  <div class="hero-kicker">Today’s Gameplan</div>
+  <div class="hero-kicker">Today's Gameplan</div>
 
   <div class="hero-name" id="heroName">
     <span>Loading...</span>
@@ -628,31 +628,32 @@ function render(data) {
   var gp = data.gameplan || {};
   var rh = data.route || {};
 
-  var name = str(gp.name) || 'Driver';
+  var name  = str(gp.name)  || 'Driver';
   var route = str(gp.route) || '';
-  var van = str(gp.van) || '';
-  var wave = str(gp.wave) || '';
+  var van   = str(gp.van)   || '';
+  var wave  = str(gp.wave)  || '';
   var stops = str(gp.stops) || '';
-  var rts = str(gp.rts) || '';
+  var rts   = str(gp.rts)   || '';
+  var esph  = str(gp.esph)  || '';
 
-  var parts = name.split(' ');
+  var parts     = name.split(' ');
   var firstName = parts[0] || name;
-  var lastName = parts.slice(1).join(' ');
+  var lastName  = parts.slice(1).join(' ');
 
   document.getElementById('heroName').innerHTML =
     '<span>' + esc(firstName) + '</span>' +
     (lastName ? esc(lastName) : '');
 
-  var diffRaw = str(rh.difficulty) || '';
-  var bizStops = str(rh.businessStops) || '';
-  var apts = str(rh.apartments) || '';
+  var diffRaw   = str(rh.difficulty)    || '';
+  var bizStops  = str(rh.businessStops) || '';
+  var apts      = str(rh.apartments)    || '';
   var routeLabel = str(rh.route) || route;
 
-  var rawNum = parseFloat(diffRaw.replace('%',''));
-  var diff = (!isNaN(rawNum) && rawNum > 0 && rawNum <= 1) ? rawNum * 100 : rawNum;
-  var diffPct = isNaN(diff) ? null : diff;
+  var rawNum   = parseFloat(diffRaw.replace('%',''));
+  var diff     = (!isNaN(rawNum) && rawNum > 0 && rawNum <= 1) ? rawNum * 100 : rawNum;
+  var diffPct  = isNaN(diff) ? null : diff;
   var diffClass = diffPct === null ? '' : (diffPct < 40 ? 'low' : diffPct < 70 ? 'medium' : 'high');
-  var diffText = diffPct === null ? '' : (diffPct < 40 ? 'Light' : diffPct < 70 ? 'Moderate' : 'Heavy');
+  var diffText  = diffPct === null ? '' : (diffPct < 40 ? 'Light' : diffPct < 70 ? 'Moderate' : 'Heavy');
 
   var html = '';
 
@@ -677,7 +678,7 @@ function render(data) {
   html += '</div>';
   html += '</div>';
 
-  var hasRouteData = diffPct !== null || bizStops || apts || stops;
+  var hasRouteData = diffPct !== null || bizStops || apts || stops || esph;
 
   if (hasRouteData) {
     html += '<div class="section">';
@@ -700,9 +701,10 @@ function render(data) {
     }
 
     html += '<div class="detail-row">';
-    if (stops) html += statItem('Total Stops', stops, 'gold');
-    if (bizStops) html += statItem('Business Stops', bizStops, '');
-    if (apts) html += statItem('Apartments', apts, '');
+    if (stops)    html += statItem('Total Stops',     stops,    'gold');
+    if (esph)     html += statItem('Expected SPH',    esph,     '');
+    if (bizStops) html += statItem('Business Stops',  bizStops, '');
+    if (apts)     html += statItem('Apartments',      apts,     '');
     html += '</div>';
 
     html += '</div>';
@@ -731,8 +733,8 @@ function routeClass(route) {
   var r = str(route).toLowerCase();
   if (r.includes('rescue')) return 'rescue';
   if (r.includes('helper')) return 'helper';
-  if (r.includes('close')) return 'close';
-  if (r.includes('cdat')) return 'cdat';
+  if (r.includes('close'))  return 'close';
+  if (r.includes('cdat'))   return 'cdat';
   return 'default';
 }
 
@@ -740,8 +742,8 @@ function routeTypeLabel(route) {
   var r = str(route).toLowerCase();
   if (r.includes('rescue')) return 'Rescue';
   if (r.includes('helper')) return 'Helper';
-  if (r.includes('close')) return 'Close';
-  if (r.includes('cdat')) return 'CDAT';
+  if (r.includes('close'))  return 'Close';
+  if (r.includes('cdat'))   return 'CDAT';
   return 'Assigned';
 }
 
